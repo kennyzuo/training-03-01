@@ -35,13 +35,13 @@ Vue 提供了全局方法 `Vue.set(target, propertyName/index, value )` 或者�
 
 2. 简述 Diff 算法的执行过程
 
-![Diff 算法]('./note/Diff.png')
+![](note/Diff.png)
 
 子节点比对
 
 首先对 children 开始和结束位置进行标记： oldStartIdx、oldEndInx、newStartIdx、newEndIdx；
 
-![]('./note/node-diff.png')
+![](note/node-diff.png)
 
 
 进行节点循环，循环结束条件是老节点或者新节点的开始位置大于结束位置，即
