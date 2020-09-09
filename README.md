@@ -60,7 +60,7 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 情况三：老 VNode 的 start 和新 VNode 的 end 是相同节点，说明更新后的节点 oldStartVnode 在 oldEndVnode 后面，这时候 执行 patchVnode，同时将 oldStartVnode 移动到 oldEndVnode 后面，然后将 oldStartInx 加1， newEndInx 减1；
 
-情况四：老 老 VNode 的 end 和新 VNode 的 start 是相同节点，说明更新后的节点 oldEndVnode  在  oldStartVnode 前面，这时候执行 patchVnode，同时将 oldEndVnode 移动到 oldStartVnode 前面，然后将 oldEndInx 减1， newStartInx 加1
+情况四：老 VNode 的 end 和新 VNode 的 start 是相同节点，说明更新后的节点 oldEndVnode  在  oldStartVnode 前面，这时候执行 patchVnode，同时将 oldEndVnode 移动到 oldStartVnode 前面，然后将 oldEndInx 减1， newStartInx 加1
 
 如果都不满足以上四种情形，那说明没有相同的节点可以复用。于是则通过查找事先建立好的以旧的 VNode 为 key 值，对应 index 序列为 value 值的哈希表。从这个哈希表中找到与 newStartVnode 一致 key 的旧的 VNode 节点，如果两者满足 sameVnode 的条件，在进行 patchVnode 的同时会将这个真实 dom 移动到 oldStartVnode 对应的真实 dom 的前面；如果没有找到，则说明当前索引下的新的 VNode 节点在旧的 VNode 队列中不存在，无法进行节点的复用，那么就只能调用 createElm 创建一个新的 dom 节点放到当前 newStartIdx 的位置。
 
