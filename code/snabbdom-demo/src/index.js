@@ -151,13 +151,23 @@ function movieView(movie) {
     [
       h("div.level", [
         h("div.level-left", [
-          h("div", { style: { fontWeight: "bold", padding: '20px' } }, movie.rank),
+          h(
+            "div.title",
+            { style: { fontWeight: "bold", width: "60px", textAlign: "center" } },
+            movie.rank
+          ),
         ]),
         h("div.level-right", { style: { flex: "1" } }, [
           h("div.message.is-primary", { style: { width: "100%" } }, [
             h("div.message-header", [
               h("p", movie.title),
-              h("button.delete", { on: { click: ()=> { removeHandler(movie) } } }),
+              h("button.delete", {
+                on: {
+                  click: () => {
+                    removeHandler(movie)
+                  },
+                },
+              }),
             ]),
             h("div.message-body", movie.desc),
           ]),
@@ -181,7 +191,7 @@ function render() {
 }
 
 function view(data) {
-  return h("div.container", { style: { marginTop: '40px' }}, [
+  return h("div.container", { style: { marginTop: "40px" } }, [
     h("h1.title", "Top 10 movies"),
     h("div.level", [
       h("div.level-left", [
@@ -191,7 +201,11 @@ function view(data) {
             "a.tag.is-primary",
             {
               class: { active: sortBy === "rank" },
-              on: { click: [changeSort, "rank"] },
+              on: {
+                click: () => {
+                  changeSort("rank")
+                },
+              },
             },
             "Rank"
           ),
@@ -199,7 +213,11 @@ function view(data) {
             "a.tag.is-primary",
             {
               class: { active: sortBy === "title" },
-              on: { click: [changeSort, "title"] },
+              on: {
+                click: () => {
+                  changeSort("title")
+                },
+              },
             },
             "Title"
           ),
@@ -207,7 +225,11 @@ function view(data) {
             "a.tag.is-primary",
             {
               class: { active: sortBy === "desc" },
-              on: { click: [changeSort, "desc"] },
+              on: {
+                click: () => {
+                  changeSort("desc")
+                },
+              },
             },
             "Description"
           ),
@@ -215,7 +237,11 @@ function view(data) {
       ]),
       h("div.level-right", [h("button.button", { on: { click: add } }, "Add")]),
     ]),
-    h("div", { style: { height: totalHeight + "px", position: 'relative' } }, data.map(movieView)),
+    h(
+      "div",
+      { style: { height: totalHeight + "px", position: "relative" } },
+      data.map(movieView)
+    ),
   ])
 }
 
