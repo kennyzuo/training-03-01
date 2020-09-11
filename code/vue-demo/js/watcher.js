@@ -3,7 +3,9 @@ class Watcher {
     this.vm = vm
     this.key = key
     this.cb = cb
+    Dep.target = this;
     this.oldvalue = vm[key]
+    Dep.target = null
   }
   update() {
     let newValue = this.vm[this.key]
