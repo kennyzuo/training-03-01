@@ -21,10 +21,13 @@ class Compiler {
   compilerText(node) {
     let reg = /\{\{(.+?)\}\}/
     if (reg.test(node.textContent)) {
-      debugger
       let key = RegExp.$1.trim()
-      console.log(key)
+
+      Dep.target = new Watcher(this.$vm, key, (val) => {
+        node.textContent = val
+      }) 
       node.textContent = this.$vm[key]
+      Dep.target = null
     }
   }
   compilerElement(node) {
@@ -46,16 +49,32 @@ class Compiler {
     })
   }
   text(node, key) {
+    Dep.target = new Watcher(this.$vm, key, (val) => {
+      node.textContent = val
+    }) 
     node.textContent = this.$vm[key]
+    Dep.target = null
   }
   model(node, key) {
+    Dep.target = new Watcher(this.$vm, key, (val) => {
+      node.value = val
+    })
     node.value = this.$vm[key]
+
+    node.addEventListener('input', (event) => {
+      this.$vm[key] = event.target.value
+    });
+    Dep.target = null
   }
   html(node, key) {
+    Dep.target = new Watcher(this.$vm, key, (val) => {
+      node.innerHTML = val
+    })
     node.innerHTML = this.$vm[key]
+    Dep.target = null
   }
   on(node, key, eventname) {
-    node.addEventListener(eventname, this.$vm[key].bind(this.$vm));
+    node.addEventListener(eventname, this.$vm[key].bind(this.$vm))
   }
 
   isEventDirectie(directive) {

@@ -10,17 +10,22 @@ class Observer {
     })
   }
   defineReactive(data, key, val) {
-    const that = this;
+    const that = this
+
+    let dep = new Dep()
+
     Object.defineProperty(data, key, {
       enumerable: true,
       configurable: true,
       get() {
+        Dep.target && dep.addSub(Dep.target)
         return val
       },
       set(value) {
         if (value === val) return
         val = value
-        that.walk(value);
+        that.walk(value)
+        dep.notify()
       },
     })
 
